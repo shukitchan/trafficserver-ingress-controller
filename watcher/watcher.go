@@ -109,7 +109,7 @@ func (w *Watcher) allNamespacesWatchFor(h EventHandler, c cache.Getter,
 
 	if !cache.WaitForCacheSync(w.StopChan, sharedInformer.HasSynced) {
 		s := fmt.Sprintf("Timed out waiting for %s caches to sync", h.GetResourceName())
-		utilruntime.HandleError(fmt.Errorf(s))
+		utilruntime.HandleError(errors.New(s))
 		return errors.New(s)
 	}
 	return nil
@@ -149,7 +149,7 @@ func (w *Watcher) inNamespacesWatchFor(h EventHandler, c cache.Getter,
 	}
 	if !cache.WaitForCacheSync(w.StopChan, syncFuncs...) {
 		s := fmt.Sprintf("Timed out waiting for %s caches to sync", h.GetResourceName())
-		utilruntime.HandleError(fmt.Errorf(s))
+		utilruntime.HandleError(errors.New(s))
 		return errors.New(s)
 	}
 	return nil
